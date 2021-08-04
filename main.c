@@ -4,6 +4,210 @@
 #include <conio2.h>
 #include <windows.h>
 
+void mudarCoresInterfaceAllForOne(int vetorSetaXY[3][3], int corBorda, int corBordaEspecial, int corBiblioteca, int corFundo, int corTexto, int controleSeta){
+
+    limparTexto(50,19,71,21);
+    gotoxy(vetorSetaXY[0][0],vetorSetaXY[1][0]);printf("   ");
+    bordaEspecial(50,19,67,19,1,corBordaEspecial);
+    corInterface(corTexto,corBordaEspecial,1);
+
+    do{
+        gotoxy(vetorSetaXY[0][1],vetorSetaXY[1][1]);printf("-->");
+        controleSeta = getch();
+
+        if (controleSeta == 0xE0){//Primeira seta da interface, cima e baixo apenas
+            controleSeta = getch();
+            movimentarSetaGLOBAL(controleSeta,vetorSetaXY,0,4,0,1,0,0,25,36,1);
+        }
+        else if (controleSeta == 13){//entrando em mudar uma das 4 opções de cores
+            //gotoxy(8,16);printf("%d ",vetorSetaXY[2][1]);
+
+            if (vetorSetaXY[2][1] == 1){//mudando a cor da biblioteca de gambiarra
+                gotoxy(vetorSetaXY[0][1],vetorSetaXY[1][1]);printf("   ");
+                limparTexto(57,23,58,16);
+                printarNomesDasCores(corTexto,corBordaEspecial,corBorda,0,1,vetorSetaXY);
+
+                do{
+                gotoxy(vetorSetaXY[0][2],vetorSetaXY[1][2]);printf("-->");
+                controleSeta = getch();
+
+                if (controleSeta == 0xE0){
+                    controleSeta = getch();
+                    movimentarSetaGLOBAL(controleSeta,vetorSetaXY,0,1,20,1,57,70,24,38,2);
+                }
+                else if (controleSeta == 13){
+                    //gotoxy(10,16);printf("%d ",vetorSetaXY[2][2]);
+                    bibliotecaGambiarra(vetorSetaXY[2][2]);
+                    textcolor(corTexto);
+                }
+
+                }while(controleSeta != 27);
+                controleSeta = reiniciarValoresInterface(corBordaEspecial,corTexto,vetorSetaXY);
+            }
+            else if (vetorSetaXY[2][1] == 2){// mudando a cor da borda normal
+                gotoxy(vetorSetaXY[0][1],vetorSetaXY[1][1]);printf("   ");
+                limparTexto(57,23,58,16);
+                printarNomesDasCores(corTexto,corBordaEspecial,corBorda,0,2,vetorSetaXY);
+
+                do{
+                    gotoxy(vetorSetaXY[0][2],vetorSetaXY[1][2]);printf("-->");
+                    controleSeta = getch();
+
+                    if (controleSeta == 0xE0){
+                        controleSeta = getch();
+                        movimentarSetaGLOBAL(controleSeta,vetorSetaXY,0,1,20,1,57,70,24,38,2);
+                    }
+                    else if (controleSeta == 13){
+                        borda1(1,1,165,42,vetorSetaXY[2][2]);
+                        borda1(69,27,14,3,vetorSetaXY[2][2]);
+
+                        for (int i=19,k=11;k<129;){
+                            borda1(k,i,29,3,vetorSetaXY[2][2]);
+                            i+=3;
+
+                            if (i == 40){
+                                i = 19;
+                                k+= 117;
+                            }
+                        }
+                        textcolor(corTexto);
+                        corBorda = vetorSetaXY[2][2];
+                    }
+
+                }while(controleSeta != 27);
+                controleSeta = reiniciarValoresInterface(corBordaEspecial,corTexto,vetorSetaXY);
+            }
+            else if (vetorSetaXY[2][1] == 3){//mudando a cor da bordaEspecial
+                gotoxy(vetorSetaXY[0][1],vetorSetaXY[1][1]);printf("   ");
+                limparTexto(57,23,58,16);
+                printarNomesDasCores(corTexto,corBordaEspecial,corBorda,0,3,vetorSetaXY);
+
+                do{
+                    gotoxy(vetorSetaXY[0][2],vetorSetaXY[1][2]);printf("-->");
+                    controleSeta = getch();
+
+                    if (controleSeta == 0xE0){
+                        controleSeta = getch();
+                        movimentarSetaGLOBAL(controleSeta,vetorSetaXY,0,1,20,1,57,70,24,38,2);
+                    }
+                    else if (controleSeta == 13){
+                        corBordaEspecial = vetorSetaXY[2][2];
+                        bordaEspecial(69,27,18,1,45,corBordaEspecial);
+                        bordaEspecial(50,19,67,19,15,corBordaEspecial);
+                        bordaEspecial(5,18,157,22,1,corBordaEspecial);
+                        textcolor(corTexto);
+                }
+            }while(controleSeta != 27);
+                controleSeta = reiniciarValoresInterface(corBordaEspecial,corTexto,vetorSetaXY);
+        }
+        else if (vetorSetaXY[2][1] == 4){//mudando a cor da bordaEspecial
+                gotoxy(vetorSetaXY[0][1],vetorSetaXY[1][1]);printf("   ");
+                limparTexto(57,23,58,16);
+                printarNomesDasCores(corTexto,corBordaEspecial,corBorda,0,4,vetorSetaXY);
+
+                do{
+                    gotoxy(vetorSetaXY[0][2],vetorSetaXY[1][2]);printf("-->");
+                    controleSeta = getch();
+
+                    if (controleSeta == 0xE0){
+                        controleSeta = getch();
+                        movimentarSetaGLOBAL(controleSeta,vetorSetaXY,48,1,20,1,57,70,24,38,2);
+                    }
+                    else if (controleSeta == 13){
+                        if (vetorSetaXY[2][2] < 20){
+                            corTexto = vetorSetaXY[2][2];
+                        }
+
+                        corFundo = vetorSetaXY[2][2];
+                        gotoxy(8,16);printf("%d ",vetorSetaXY[2][2]);
+                        if (vetorSetaXY[2][2]>=20){
+                            corFundo-=20;
+                            textbackground(corFundo);
+                            gotoxy(1,1);
+                            for (int i=1;i<43;i++)//refazer a tela inteira
+                                printf("                                                                                                                                                                       ");
+                                bibliotecaGambiarra(corBiblioteca);
+                                borda1(1,1,165,42,corBorda);
+                                bordaEspecial(5,18,157,22,0,corBordaEspecial);
+                                borda1(24,14,115,3,15); //borda em baixo do gambiarra
+
+                                for (int i=19,k=11;k<129;){
+                                    borda1(k,i,29,3,corBorda);
+                                    i+=3;
+
+                                    if (i == 40){
+                                        i = 19;
+                                        k+= 117;
+                                    }
+                                }
+
+                                opcoes(corTexto,0);
+                                printarNomesDasCores(corTexto,corBordaEspecial,corBorda,0,4,vetorSetaXY);
+                                corFundo+=20;
+                        }
+                        else{
+                            corInterface(corTexto,corBordaEspecial,0);
+                            opcoes(corTexto,0);
+                            printarNomesDasCores(corTexto,corBordaEspecial,corBorda,1,4,vetorSetaXY);
+                        }
+                        if (corTexto >= 20)
+                            corTexto-=20;
+
+                        textcolor(corTexto);
+                }
+            }while(controleSeta != 27);
+                controleSeta = reiniciarValoresInterface(corBordaEspecial,corTexto,vetorSetaXY);
+        }
+    }
+
+    }while(controleSeta != 27);
+
+    controleSeta = 0;
+    limparTexto(50,19,71,21);
+    for (int i=19 ,k = 11;k<129;){
+        borda1(k,i,29,3,corBorda);
+        i+=3;
+
+        if (i==40){
+            i = 19;
+            k+=39;
+        }
+    }
+    opcoes(corTexto,1);//antes de voltar ao inicio, printar tudo de volta como estava
+}
+
+void telaInicial(int corBorda, int corBiblioteca, int corBordaEspecial, int corTexto, int vetorSetaXY[3][3]){
+    bibliotecaGambiarra(corBiblioteca);
+    borda1(1,1,165,42,corBorda);
+    bordaEspecial(5,18,157,22,0,corBordaEspecial);
+    borda1(24,14,115,3,15); //borda em baixo do gambiarra
+
+    for (int i=19 ,k = 11;k<129;){
+        borda1(k,i,29,3,corBorda);
+        i+=3;
+
+        if (i==40){
+            i = 19;
+            k+=39;
+        }
+    }
+
+    opcoes(corTexto,1);
+
+    vetorSetaXY[0][0] = 7; //movimentar a seta do inicio
+    vetorSetaXY[1][0] = 23;
+    vetorSetaXY[2][0] = 1;
+
+    vetorSetaXY[0][1] = 52; //movimentar a primeira seta da interface
+    vetorSetaXY[1][1] = 25;
+    vetorSetaXY[2][1] = 1;
+
+    vetorSetaXY[0][2] = 53;
+    vetorSetaXY[1][2] = 24;
+    vetorSetaXY[2][2] = 0;
+
+}
+
 void opcoes(int cor, int control){
     textcolor(cor);
 
@@ -13,14 +217,14 @@ void opcoes(int cor, int control){
     gotoxy(25,15);printf("Pressione as setas do teclado [");
     gotoxy(60,15);printf("] para a movimentação da seta e pressione [Enter] para entrar e [ESC] para sair!");
 
+    gotoxy(12,23);printf("Visitar questões do TheHuxley");
+    gotoxy(140,20);printf("Jogos");
+    gotoxy(21,20);printf("Exercícios");
+
     if (control == 1){
-        gotoxy(21,20);printf("Exercícios");
+
         gotoxy(63,20);printf("Artes");
         gotoxy(101,20);printf("Projetos");
-        gotoxy(140,20);printf("Jogos");
-
-        gotoxy(12,23);printf("Visitar questões do TheHuxley");
-
         gotoxy(53,23);printf("Mudar cores da interface");
     }
     setlocale(LC_ALL,"C");
@@ -28,33 +232,33 @@ void opcoes(int cor, int control){
 
 }
 
-void movimentarSetaInicio(int seta,int setaXY[3][3]){
-    if (seta == 72){
-        if (setaXY[1][0] > 23){
-            gotoxy(setaXY[0][0],setaXY[1][0]);printf("   "); //seta para cima
-            setaXY[1][0]-=3;
-            setaXY[2][0]-=1;
+void movimentarSetaGLOBAL(int seta,int setaXY[3][3], int xVezes, int yVezes, int xContador, int yContador, int xMaximoES, int xMaximoDI, int yMaximoUp, int yMaximoDown, int down){
+    if (seta == 72 && yVezes != 0){
+        if (setaXY[1][down] > yMaximoUp){
+            gotoxy(setaXY[0][down],setaXY[1][down]);printf("   "); //seta para cima
+            setaXY[1][down]-=yVezes;
+            setaXY[2][down]-=yContador;
         }
     }
-    else if (seta == 75){
-        if (setaXY[0][0]>7){
-            gotoxy(setaXY[0][0],setaXY[1][0]);printf("   "); // seta para esquerda
-            setaXY[0][0]-=39;
-            setaXY[2][0]-=10;
+    else if (seta == 75 && xVezes != 0){
+        if (setaXY[0][down]>xMaximoES){
+            gotoxy(setaXY[0][down],setaXY[1][down]);printf("   "); // seta para esquerda
+            setaXY[0][down]-=xVezes;
+            setaXY[2][down]-=xContador;
         }
     }
-    else if (seta == 77){
-        if (setaXY[0][0]<115){
-            gotoxy(setaXY[0][0],setaXY[1][0]);printf("   "); //seta para direita
-            setaXY[0][0]+=39;
-            setaXY[2][0]+=10;
+    else if (seta == 77 && xVezes != 0){
+        if (setaXY[0][down]<xMaximoDI){
+            gotoxy(setaXY[0][down],setaXY[1][down]);printf("   "); //seta para direita
+            setaXY[0][down]+=xVezes;
+            setaXY[2][down]+=xContador;
         }
     }
-    else if (seta == 80){
-        if (setaXY[1][0]<38){
-            gotoxy(setaXY[0][0],setaXY[1][0]);printf("   "); //seta para baixo
-            setaXY[1][0]+=3;
-            setaXY[2][0]+=1;
+    else if (seta == 80 && yVezes != 0){
+        if (setaXY[1][down]<yMaximoDown){
+            gotoxy(setaXY[0][down],setaXY[1][down]);printf("   "); //seta para baixo
+            setaXY[1][down]+=yVezes;
+            setaXY[2][down]+=yContador;
         }
     }
     else{
@@ -179,7 +383,7 @@ int bibliotecaGambiarra(int cor){
 
 void corInterface(int corTexto, int corBordaEspecial, int control){
     if (control == 1)
-        bordaEspecial(57,20,57,control,control,12);
+        bordaEspecial(57,20,57,control,control,15);
 
     setlocale(LC_ALL,"Portuguese");
     textcolor(corTexto);
@@ -204,7 +408,7 @@ void corInterface(int corTexto, int corBordaEspecial, int control){
     }
 }
 
-void printarNomesDasCores(int corTexto,int corBordaEspecial, int control, int corNomes){
+void printarNomesDasCores(int corTexto,int corBordaEspecial, int corBordaNormal, int control, int corNomes, int setaXY[3][3]){
     if (control == 0){
         char cores[15][15];
         int right=57,down=24,controleCor=0;
@@ -231,115 +435,57 @@ void printarNomesDasCores(int corTexto,int corBordaEspecial, int control, int co
                 gotoxy(right,down);printf("%c",cores[i][j]);
                 Sleep(1);
             }
+            if (setaXY[2][1] == 4){
             right = 105;
             gotoxy(right,down);printf("%s",cores[i]);
+            }
 
             right = 57;
             controleCor++;
         }
     }
-    control = 0;
     if (corNomes == 1){
-
+        bordaEspecial(69,27,27,1,1,corBordaEspecial);
+        textcolor(corTexto);
+        gotoxy(70,28);printf("< biblioteca de gambiarra");
+    }
+    else if (corNomes == 2){
+        borda1(69,27,14,3,corBordaNormal);
+        textcolor(corTexto);
+        gotoxy(70,28);printf("< borda normal");
+    }
+    else if (corNomes == 3){
+        bordaEspecial(69,27,18,1,1,corBordaEspecial);
+        textcolor(corTexto);
+        gotoxy(70,28);printf("< borda Especial");
     }
     else if (corNomes == 4){
-        bordaEspecial(69,27,29,1,control,corBordaEspecial);
+        bordaEspecial(69,27,29,1,1,corBordaEspecial);
         textcolor(corTexto);
         gotoxy(70,28);printf("< Texto             Fundo >");
     }
 }
 
-void movimentarSetaInterface1(int seta, int setaXY[3][3]){
-    if (seta == 72){
-        if (setaXY[1][1] > 25){
-            gotoxy(setaXY[0][1],setaXY[1][1]);printf("   "); //seta para cima
-            setaXY[1][1]-=4;
-            setaXY[2][1]-=1;
-        }
-    }
-    else if (seta == 80){
-        if (setaXY[1][1]<36){
-            gotoxy(setaXY[0][1],setaXY[1][1]);printf("   "); //seta para baixo
-            setaXY[1][1]+=4;
-            setaXY[2][1]+=1;
-        }
-    }
-    else{
-    }
+int reiniciarValoresInterface(int corBordaEspecial, int corTexto, int vetorSetaXY[3][3]){
 
-}
+    limparTexto(50,19,71,21);
+    bordaEspecial(50,19,67,19,1,corBordaEspecial);
+    corInterface(corTexto,corBordaEspecial,1);
+    vetorSetaXY[0][2] = 53;
+    vetorSetaXY[1][2] = 24;
+    vetorSetaXY[2][2] = 0;
 
-void movimentarSetaInterface2(int seta, int setaXY[3][3],int control){
-        if (seta == 72){
-        if (setaXY[1][2] > 24){
-            gotoxy(setaXY[0][2],setaXY[1][2]);printf("   "); //seta para cima
-            setaXY[1][2]-=1;
-            setaXY[2][2]-=1;
-        }
-    }
-    else if (seta == 75 && control == 1){
-        if (setaXY[0][2]>57){
-            gotoxy(setaXY[0][2],setaXY[1][2]);printf("   "); // seta para esquerda
-            setaXY[0][2]-=48;
-            setaXY[2][2]-=20;
-        }
-    }
-    else if (seta == 77 && control == 1){
-        if (setaXY[0][2]<70){
-            gotoxy(setaXY[0][2],setaXY[1][2]);printf("   "); //seta para direita
-            setaXY[0][2]+=48;
-            setaXY[2][2]+=20;
-        }
-    }
-    else if (seta == 80){
-        if (setaXY[1][2]<38){
-            gotoxy(setaXY[0][2],setaXY[1][2]);printf("   "); //seta para baixo
-            setaXY[1][2]+=1;
-            setaXY[2][2]+=1;
-        }
-    }
-    else{
-    }
-
-
+    return 0;
 }
 
 int main(){
-    //setlocale(LC_ALL,"portuguese");
     gotoxy(12,15);printf("Expanda o CMD para no minimo a resolucao 1360 x 768 e pressione qualquer tecla para comecar");
     getch();
     limparTexto(12,15,91,1);
     int corTexto=14,corBorda=5,corBordaEspecial=10,corBiblioteca=2,corFundo=0;
-
-    bibliotecaGambiarra(corBiblioteca);
-    borda1(1,1,165,42,corBorda);
-    bordaEspecial(5,18,157,22,0,corBordaEspecial);
-    borda1(24,14,115,3,corBorda); //borda em baixo do gambiarra
-
-    for (int i=19 ,k = 11;k<129;){
-        borda1(k,i,29,3,corBorda);
-        i+=3;
-
-        if (i==40){
-            i = 19;
-            k+=39;
-        }
-    }
-
-    opcoes(corTexto,1);
-
     int controleSeta,vetorSetaXY[3][3];
-    vetorSetaXY[0][0] = 7; //movimentar a seta do inicio
-    vetorSetaXY[1][0] = 23;
-    vetorSetaXY[2][0] = 1;
 
-    vetorSetaXY[0][1] = 52; //movimentar a primeira seta da interface
-    vetorSetaXY[1][1] = 25;
-    vetorSetaXY[2][1] = 1;
-
-    vetorSetaXY[0][2] = 53;
-    vetorSetaXY[1][2] = 24;
-    vetorSetaXY[2][2] = 0;
+    telaInicial(corBorda, corBiblioteca, corBordaEspecial,corTexto,vetorSetaXY);
 
     do{ //principal
         gotoxy(vetorSetaXY[0][0],vetorSetaXY[1][0]);printf("-->");
@@ -347,183 +493,13 @@ int main(){
 
         if (controleSeta == 0xE0){
             controleSeta = getch();
-            movimentarSetaInicio(controleSeta,vetorSetaXY);
+            movimentarSetaGLOBAL(controleSeta,vetorSetaXY,39,3,10,1,7,115,23,38,0);
         }
         else if (controleSeta == 13){//saindo do inicial
-            gotoxy(5,16);printf("%d ",vetorSetaXY[2][0]);
-
             if (vetorSetaXY[2][0] == 11){//entrando em Mudar Cores da Interface
-                limparTexto(50,19,71,21);
-                gotoxy(vetorSetaXY[0][0],vetorSetaXY[1][0]);printf("   ");
-                bordaEspecial(50,19,67,19,1,corBordaEspecial);
-                corInterface(corTexto,corBordaEspecial,1);
-
-                do{
-                    gotoxy(vetorSetaXY[0][1],vetorSetaXY[1][1]);printf("-->");
-                    controleSeta = getch();
-
-                    if (controleSeta == 0xE0){//Primeira seta da interface, cima e baixo apenas
-                        controleSeta = getch();
-                        movimentarSetaInterface1(controleSeta,vetorSetaXY);
-                    }
-                    else if (controleSeta == 13){//entrando em mudar uma das 4 opções de cores
-                        //gotoxy(8,16);printf("%d ",vetorSetaXY[2][1]);
-
-                        if (vetorSetaXY[2][1] == 1){//mudando a cor da biblioteca de gambiarra
-                            gotoxy(vetorSetaXY[0][1],vetorSetaXY[1][1]);printf("   ");
-                            limparTexto(57,23,58,16);
-                            printarNomesDasCores(corTexto,corBordaEspecial,0,1);
-
-                            do{
-                            gotoxy(vetorSetaXY[0][2],vetorSetaXY[1][2]);printf("-->");
-                            controleSeta = getch();
-
-                            if (controleSeta == 0xE0){
-                                controleSeta = getch();
-                                movimentarSetaInterface2(controleSeta,vetorSetaXY,0);
-                            }
-                            else if (controleSeta == 13){
-                                //gotoxy(10,16);printf("%d ",vetorSetaXY[2][2]);
-                                bibliotecaGambiarra(vetorSetaXY[2][2]);
-                                textcolor(corTexto);
-                            }
-
-                            }while(controleSeta != 27);
-                            controleSeta = 0;
-                            limparTexto(50,19,71,21);
-                            bordaEspecial(50,19,67,19,1,corBordaEspecial);
-                            corInterface(corTexto,corBordaEspecial,1);
-                            vetorSetaXY[0][2] = 53;
-                            vetorSetaXY[1][2] = 24;
-                            vetorSetaXY[2][2] = 0;
-                        }
-                        else if (vetorSetaXY[2][1] == 2){// mudando a cor da borda normal
-                            gotoxy(vetorSetaXY[0][1],vetorSetaXY[1][1]);printf("   ");
-                            limparTexto(57,23,58,16);
-                            printarNomesDasCores(corTexto,corBordaEspecial,0,2);
-
-                            do{
-                                gotoxy(vetorSetaXY[0][2],vetorSetaXY[1][2]);printf("-->");
-                                controleSeta = getch();
-
-                                if (controleSeta == 0xE0){
-                                    controleSeta = getch();
-                                    movimentarSetaInterface2(controleSeta,vetorSetaXY,0);
-                                }
-                                else if (controleSeta == 13){
-                                    borda1(1,1,165,42,vetorSetaXY[2][2]);
-
-                                    for (int i=19,k=11;k<129;){
-                                        borda1(k,i,29,3,vetorSetaXY[2][2]);
-                                        i+=3;
-
-                                        if (i == 40){
-                                            i = 19;
-                                            k+= 117;
-                                        }
-                                    }
-                                    textcolor(corTexto);
-                                    corBorda = vetorSetaXY[2][2];
-                                }
-
-                            }while(controleSeta != 27);
-                            controleSeta = 0;
-                            limparTexto(50,19,71,21);
-                            bordaEspecial(50,19,67,19,1,corBordaEspecial);
-                            corInterface(corTexto,corBordaEspecial,1);
-                            vetorSetaXY[0][2] = 53;
-                            vetorSetaXY[1][2] = 24;
-                            vetorSetaXY[2][2] = 0;
-                        }
-                        else if (vetorSetaXY[2][1] == 3){//mudando a cor da bordaEspecial
-                            gotoxy(vetorSetaXY[0][1],vetorSetaXY[1][1]);printf("   ");
-                            limparTexto(57,23,58,16);
-                            printarNomesDasCores(corTexto,corBordaEspecial,0,3);
-
-                            do{
-                                gotoxy(vetorSetaXY[0][2],vetorSetaXY[1][2]);printf("-->");
-                                controleSeta = getch();
-
-                                if (controleSeta == 0xE0){
-                                    controleSeta = getch();
-                                    movimentarSetaInterface2(controleSeta,vetorSetaXY,0);
-                                }
-                                else if (controleSeta == 13){
-                                    corBordaEspecial = vetorSetaXY[2][2];
-                                    bordaEspecial(50,19,67,19,1,corBordaEspecial);
-                                    bordaEspecial(5,18,157,22,1,corBordaEspecial);
-                                    textcolor(corTexto);
-                            }
-                        }while(controleSeta != 27);
-                            controleSeta = 0;
-                            limparTexto(50,19,71,21);
-                            bordaEspecial(50,19,67,19,1,corBordaEspecial);
-                            corInterface(corTexto,corBordaEspecial,1);
-                            vetorSetaXY[0][2] = 53;
-                            vetorSetaXY[1][2] = 24;
-                            vetorSetaXY[2][2] = 0;
-                    }
-                    else if (vetorSetaXY[2][1] == 4){//mudando a cor da bordaEspecial
-                            gotoxy(vetorSetaXY[0][1],vetorSetaXY[1][1]);printf("   ");
-                            limparTexto(57,23,58,16);
-                            printarNomesDasCores(corTexto,corBordaEspecial,0,4);
-
-                            do{
-                                gotoxy(vetorSetaXY[0][2],vetorSetaXY[1][2]);printf("-->");
-                                controleSeta = getch();
-
-                                if (controleSeta == 0xE0){
-                                    controleSeta = getch();
-                                    movimentarSetaInterface2(controleSeta,vetorSetaXY,1);
-                                }
-                                else if (controleSeta == 13){
-                                    if (vetorSetaXY[2][2] < 20){
-                                        corTexto = vetorSetaXY[2][2];
-                                    }
-
-                                    corFundo = vetorSetaXY[2][2];
-                                    gotoxy(8,16);printf("%d ",vetorSetaXY[2][2]);
-                                    if (vetorSetaXY[2][2]>=20){
-                                        corFundo-=20;
-                                        textbackground(corFundo);
-                                        corFundo+=20;
-                                    }
-                                    else{
-                                        corInterface(corTexto,corBordaEspecial,0);
-                                        opcoes(corTexto,0);
-                                        printarNomesDasCores(corTexto,corBordaEspecial,1,4);
-                                    }
-                                    if (corTexto >= 20)
-                                        corTexto-=20;
-
-                                    textcolor(corTexto);
-                            }
-                        }while(controleSeta != 27);
-                            controleSeta = 0;
-                            limparTexto(50,19,71,21);
-                            bordaEspecial(50,19,67,19,1,corBordaEspecial);
-                            corInterface(corTexto,corBordaEspecial,1);
-                            vetorSetaXY[0][2] = 53;
-                            vetorSetaXY[1][2] = 24;
-                            vetorSetaXY[2][2] = 0;
-                    }
-                }
-
-                }while(controleSeta != 27);
-
-            controleSeta = 0;
-            limparTexto(50,19,71,21);
-            for (int i=19 ,k = 11;k<129;){
-                borda1(k,i,29,3,corBorda);
-                i+=3;
-
-                if (i==40){
-                    i = 19;
-                    k+=39;
-                }
+                mudarCoresInterfaceAllForOne(vetorSetaXY,corBorda,corBordaEspecial,corBiblioteca,corFundo,corTexto,controleSeta);
+                opcoes(corTexto,1);//antes de voltar ao inicio, printar tudo de volta como estava
             }
-        }
-        opcoes(corTexto,1);//antes de voltar ao inicio, printar tudo de volta como estava
         }//Mudar cor da interface acaba aqui
 
     }while(controleSeta!=27); //principal
